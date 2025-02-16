@@ -19,7 +19,7 @@ import {
   ssr,
 } from "@fullsoak/fullsoak";
 
-import { MyApp } from "./components/MyApp";
+import { MyApp } from "./components/MyApp/index.js";
 
 setupDefaultFullsoakLogger();
 
