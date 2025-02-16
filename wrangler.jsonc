@@ -4,7 +4,7 @@
  */
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "fullsoak-cloudflare-example",
+  "name": "fullsoak-cloudflare-workers-examples",
   "main": "src/index.ts",
   "compatibility_date": "2025-02-04",
   "observability": {
@@ -19,6 +19,8 @@
   "alias": {
     "@swc/wasm": "./node_modules/@swc/core",
     "@swc/core-darwin-arm64": "./node_modules/@swc/core",
+    "@swc/core-linux-x64-gnu": "./node_modules/@swc/core",
+    "@swc/core-linux-x64-musl": "./node_modules/@swc/core",
     "react": "./node_modules/preact/compat",
     "react-dom": "./node_modules/preact/compat",
     "npm:preact@10.25.4/jsx-runtime": "./node_modules/preact/jsx-runtime"
