@@ -95,4 +95,10 @@ That is also not yet supported by Cloudflare Workers `uenv`.
 (✓) resolved using a patch on `app.fetch` so `.css` and `.t|jsx` files are
 loaded via Cloudflare Workers Static Assets instead of file system.
 
+(❌) css content that is Server-side-rendered together with the initial HTML
+content is not yet supported. A workaround is to inline CSS into the components,
+or placing `<link>` elements. Whether it's possible to provide the same level of
+support for this feature as it is on the other deployment platforms (Deno Deploy
+/ render.com / self-host) is unknown at the moment.
+
 ---
