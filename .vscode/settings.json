@@ -1,0 +1,7 @@
+{
+  "tab_size": 2,
+  "hard_tabs": false,
+  "files.associations": {
+    "wrangler.json": "jsonc"
+  }
+}
