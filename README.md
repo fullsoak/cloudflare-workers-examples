@@ -10,7 +10,7 @@ APIs.
 This repo serves as a Proof of Concept that FullSoak framework is compatible
 with Cloudflare Workers with the correct setup.
 
-## Deep-dives
+## Cloudflare Workers specific deep-dives
 
 ### The pragma comments on HtmlShell are a must-have
 
@@ -32,9 +32,9 @@ The general setup is to alias in `tsconfig.json` like so:
 
 ```json
 {
-  "paths": {
-    "npm:preact@10.25.4/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
-  }
+	"paths": {
+		"npm:preact@10.25.4/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
+	}
 }
 ```
 
@@ -46,12 +46,13 @@ Cloudflare Workers and render.com (or similar non-Deno deployment envs).
 
 ---
 
-### uglify-js is a no-go
+### uglify-js is unsupported
 
-Because somehow uglify-js refers to `__require.resolve` which is probably not
-understood in modern deployment environments like Cloudflare Workers (at least
-without special catering). For just the uglifying need, it may not be worth the
-efforts trying to provision `uglify-js`.
+Somehow `uglify-js` refers to `__require.resolve` which is probably not
+understood in deployment environments like Cloudflare Workers (at least without
+special catering). FullSoak uses `uglify-js` itself as a fallback when
+`@swc/core` fails to load. So it may not be worth the efforts trying to
+provision `uglify-js`.
 
 It's possible to
 [alias](https://developers.cloudflare.com/workers/wrangler/configuration/#module-aliasing)
@@ -61,33 +62,38 @@ It's possible to
 { "uglify-js": "/path/to/something/else" }
 ```
 
-but shouldn't we do away with uglify-js from the first place anyways?
+or use something else altogether. Either way, some room for improvements here.
 
 (✓) later versions of FullSoak no longer hard-rely on `uglify-js`.
 
 ---
 
-### @swc is a no-go
+### @swc is unsupported
 
-To unblock the process startup, a workaround is to
+Latest FullSoak version (at writing time) still fails to start up on Cloudflare
+Workers as `@swc/core` native binding is not supported. To unblock the process
+startup, a workaround is to
 [alias](https://developers.cloudflare.com/workers/wrangler/configuration/#module-aliasing)
 like so:
 
 ```jsonc
 {
-  "@swc/wasm": "./node_modules/@swc/core",
-  "@swc/core-darwin-arm64": "./node_modules/@swc/core" // platform dependent - your mileage might vary
+	"@swc/wasm": "./node_modules/@swc/core",
+	"@swc/core-darwin-arm64": "./node_modules/@swc/core", // platform dependent - your mileage might vary
 }
 ```
 
 but that means `@swc/core` native binding itself is not usable, rendering the
-entire library useless => a drop-in replacement is required anyways.
+library useless => a drop-in replacement is required anyways.
 
 (✓) later versions of FullSoak employs `typescript` as a fallback.
 
+Another improvement opportunity: make it work without the aliasing trick above,
+too.
+
 ---
 
-### fs.readFile is a no go
+### fs.readFile is unsupported
 
 FullSoak uses `fs.readFile` to serve `.css` and `.tsx` files for the components.
 That is also not yet supported by Cloudflare Workers `uenv`.
@@ -102,3 +108,8 @@ support for this feature as it is on the other deployment platforms (Deno Deploy
 / render.com / self-host) is unknown at the moment.
 
 ---
+
+## Other platforms
+
+- Examples for Deno runtime: https://github.com/fullsoak/deno-examples
+- Examples for Bun runtime: https://github.com/fullsoak/bun-examples
