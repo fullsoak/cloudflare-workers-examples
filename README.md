@@ -10,7 +10,26 @@ APIs.
 This repo serves as a Proof of Concept that FullSoak framework is compatible
 with Cloudflare Workers with the correct setup.
 
+WARNING: as the [FullSoak framework](https://jsr.io/@fullsoak/fullsoak) is still
+in an early development phase, breaking changes are expected. When in doubt,
+please feel free to open a PR / discussion. Thank you for your interest!
+
+## Available commands
+
+This repo is prepared for the Cloudflare Workers runtime. If you're familiar
+with developing Cloudflare Workers apps, you will feel right at home. Please be
+sure to check the configuration files (e.g. `tsconfig.json`, `wrangler.jsonc`,
+etc.) to get an idea of what is configured to make a FullSoak app deployable on
+Cloudflare Workers environment.
+
+```bash
+npm run dev
+```
+
 ## Cloudflare Workers specific deep-dives
+
+The topics below only apply when using FullSoak on Cloudflare Workers. For other
+deploying destinations, we wouldn't face most of the challenges discussed here.
 
 ### The pragma comments on HtmlShell are a must-have
 
@@ -32,9 +51,9 @@ The general setup is to alias in `tsconfig.json` like so:
 
 ```json
 {
-	"paths": {
-		"npm:preact@10.25.4/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
-	}
+  "paths": {
+    "npm:preact@10.25.4/jsx-runtime": ["./node_modules/preact/jsx-runtime"]
+  }
 }
 ```
 
@@ -52,7 +71,7 @@ Somehow `uglify-js` refers to `__require.resolve` which is probably not
 understood in deployment environments like Cloudflare Workers (at least without
 special catering). FullSoak uses `uglify-js` itself as a fallback when
 `@swc/core` fails to load. So it may not be worth the efforts trying to
-provision `uglify-js`.
+provision for `uglify-js`.
 
 It's possible to
 [alias](https://developers.cloudflare.com/workers/wrangler/configuration/#module-aliasing)
@@ -78,8 +97,8 @@ like so:
 
 ```jsonc
 {
-	"@swc/wasm": "./node_modules/@swc/core",
-	"@swc/core-darwin-arm64": "./node_modules/@swc/core", // platform dependent - your mileage might vary
+  "@swc/wasm": "./node_modules/@swc/core",
+  "@swc/core-darwin-arm64": "./node_modules/@swc/core" // platform dependent - your mileage might vary
 }
 ```
 
