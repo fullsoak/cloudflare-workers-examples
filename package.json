@@ -18,7 +18,7 @@
     "wrangler": "^3.109.1"
   },
   "dependencies": {
-    "@fullsoak/fullsoak": "npm:@jsr/fullsoak__fullsoak@^0.9.0-rc.1",
+    "@fullsoak/fullsoak": "npm:@jsr/fullsoak__fullsoak@0.9.0-rc.1",
     "preact": "npm:preact@^10.25.4",
     "react": "npm:@preact/compat",
     "react-dom": "npm:@preact/compat"

@@ -13,21 +13,29 @@
 
 import {
   _unstable_useFetchMode,
+  Context,
   Controller,
   Get,
   setupDefaultFullsoakLogger,
   ssr,
 } from "@fullsoak/fullsoak";
-
-import { MyApp } from "./components/MyApp/index.js";
+import { MyComponent } from "./components/MyComponent/index.tsx";
+import { MyRouteAwareComponent } from "./components/MyRouteAwareComponent/index.tsx";
 
 setupDefaultFullsoakLogger();
 
 @Controller()
 class MyController {
   @Get("/")
-  serve() {
-    return ssr(MyApp);
+  renderDynamicallyImportedComponent() {
+    return ssr(MyComponent, { foo: "bar" });
+  }
+
+  @Get("/app")
+  @Get("/app/:page")
+  @Get("/app/:page/:sup1")
+  renderMyRouteAwareComponent(ctx: Context) {
+    return ssr(MyRouteAwareComponent, { url: ctx.request.url.href });
   }
 }
 
