@@ -130,5 +130,6 @@ support for this feature as it is on the other deployment platforms (Deno Deploy
 
 ## Other platforms
 
+- Examples for Node.js runtime: https://github.com/fullsoak/nodejs-examples
 - Examples for Deno runtime: https://github.com/fullsoak/deno-examples
 - Examples for Bun runtime: https://github.com/fullsoak/bun-examples

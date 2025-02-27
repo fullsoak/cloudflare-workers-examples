@@ -12,7 +12,7 @@
  */
 
 import {
-  _unstable_useFetchMode,
+  _unstable_useCloudflareWorkersMode,
   Context,
   Controller,
   Get,
@@ -31,17 +31,16 @@ class MyController {
     return ssr(MyComponent, { foo: "bar" });
   }
 
-  @Get("/app")
-  @Get("/app/:page")
-  @Get("/app/:page/:sup1")
+  @Get("/:view*")
   renderMyRouteAwareComponent(ctx: Context) {
     return ssr(MyRouteAwareComponent, { url: ctx.request.url.href });
   }
 }
 
-const app = _unstable_useFetchMode({
+const app = _unstable_useCloudflareWorkersMode({
   controllers: [MyController],
   cloudflareStaticAssetsBinding: "COMPONENTS",
+  componentsDir: "components",
 });
 
 export default { fetch: app.fetch };

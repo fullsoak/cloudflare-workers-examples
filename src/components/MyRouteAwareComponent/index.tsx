@@ -9,7 +9,7 @@ import {
 // Synchronous
 import { Home } from "./routes/Home.tsx";
 import { Profiles } from "./routes/Profiles.tsx";
-import { ExperimentalBadge } from "../ExperimentalBadge.js";
+import { ExperimentalBadge } from "../ExperimentalBadge.tsx";
 
 // Asynchronous (throws a promise)
 const Profile = lazy(() =>
