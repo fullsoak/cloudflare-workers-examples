@@ -37,7 +37,7 @@ class MyController {
   }
 }
 
-const app = _unstable_useCloudflareWorkersMode({
+const app = await _unstable_useCloudflareWorkersMode({
   controllers: [MyController],
   cloudflareStaticAssetsBinding: "COMPONENTS",
   componentsDir: "components",
